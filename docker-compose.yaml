@@ -1,0 +1,53 @@
+version: "3"
+services:
+  mysql-idea:
+    container_name: mysql-idea
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ideacloud
+      MYSQL_ROOT_PASSWORD: root1234
+      TZ: Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/mysql-init.d:/docker-entrypoint-initdb.d
+    networks:
+      - idea-network
+  redis-idea:
+    container_name: redis-idea
+    image: redis:6.0.5
+    hostname: redis
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    ports:
+      - "6379:6379"
+    networks:
+      - idea-network
+  spring-idea:
+    container_name: spring-idea
+    image: openjdk:17-jdk
+    ports:
+      - "8888:8888"
+    depends_on:
+      - mysql-idea
+    volumes:
+      - ./:/app
+    working_dir: /app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        ./gradlew clean
+        ./gradlew bootrun -x test
+    restart: on-failure
+    networks:
+      - idea-network
+
+networks:
+  idea-network:
