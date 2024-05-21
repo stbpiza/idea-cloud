@@ -1,5 +1,14 @@
 # idea-cloud
 
+## 실행 방법
+- docker-compose를 이용하여 실행합니다. (docker 설치 필요)
+- docker-compose.yaml 파일이 있는 디렉토리에서 아래 명령어를 실행합니다.
+```bash
+docker-compose up -d --build
+or 
+docker compose up -d --build
+```
+
 ## Description
 
 - 회의록을 작성하면 키워드를 추출하여 시각화해주는 서비스입니다.

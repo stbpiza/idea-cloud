@@ -32,7 +32,7 @@ services:
       - idea-network
   spring-idea:
     container_name: spring-idea
-    image: openjdk:17-jdk
+    image: azul/zulu-openjdk:17-latest
     ports:
       - "8888:8888"
     depends_on:
