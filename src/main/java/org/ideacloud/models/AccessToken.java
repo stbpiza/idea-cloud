@@ -23,8 +23,10 @@ public class AccessToken extends TimeEntity {
     @Column(name = "access_token_id", nullable = false, updatable = false)
     private Long accessTokenId;
 
+    @Column(name = "token")
     private String token;
 
+    @Column(name = "user_id", nullable = false)
     private Long userId;
 
     @Builder

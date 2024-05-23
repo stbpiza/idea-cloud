@@ -14,7 +14,7 @@ public class AuthUserDao {
     }
 
     public Optional<AuthUser> findByEmail(String email) {
-        String query = "SELECT id, password, role FROM users WHERE email=?";
+        String query = "SELECT user_id, password, role FROM users WHERE email=?";
 
         return jdbcTemplate.query(query, resultSet -> {
             if (!resultSet.next()) {
@@ -22,7 +22,7 @@ public class AuthUserDao {
             }
 
             AuthUser authUser = AuthUser.of(
-                    resultSet.getString("id"),
+                    resultSet.getString("user_id"),
                     email,
                     resultSet.getString("password"),
                     resultSet.getString("role")
@@ -43,9 +43,9 @@ public class AuthUserDao {
 
     public Optional<AuthUser> findByAccessToken(String accessToken) {
         String query = """
-                SELECT users.id, users.role
+                SELECT users.user_id, users.role
                 FROM users
-                JOIN access_tokens ON access_tokens.user_id=users.id
+                JOIN access_tokens ON access_tokens.user_id=users.user_id
                 WHERE access_tokens.token=?
                 """;
 
@@ -55,7 +55,7 @@ public class AuthUserDao {
             }
 
             AuthUser authUser = AuthUser.authenticated(
-                    resultSet.getString("id"),
+                    resultSet.getString("user_id"),
                     resultSet.getString("role"),
                     accessToken
             );
