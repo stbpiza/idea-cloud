@@ -5,8 +5,8 @@ CREATE DATABASE ideacloud;
 
 CREATE TABLE IF NOT EXISTS `ideacloud`.`users` (
 `user_id` bigint NOT NULL AUTO_INCREMENT,
-`createdAt` datetime NOT NULL,
-`updatedAt` datetime NOT NULL,
+`created` datetime NOT NULL,
+`updated` datetime NOT NULL,
 `email` varchar(255) NOT NULL,
 `name` varchar(50) NOT NULL,
 `password` varchar(255) NOT NULL,
@@ -17,8 +17,8 @@ UNIQUE KEY `email` (`email`) USING BTREE
 
 CREATE TABLE IF NOT EXISTS `ideacloud`.`access_tokens` (
 `access_token_id` bigint NOT NULL AUTO_INCREMENT,
-`createdAt` datetime NOT NULL,
-`updatedAt` datetime NOT NULL,
+`created` datetime NOT NULL,
+`updated` datetime NOT NULL,
 `token` varchar(255) NOT NULL,
 `userId` bigint NOT NULL,
 PRIMARY KEY (`access_token_id`)

@@ -34,8 +34,8 @@ public class AuthUserDao {
 
     public void addAccessToken(String userId, String accessToken) {
         jdbcTemplate.update("""
-                        INSERT INTO access_tokens (token, user_id)
-                        VALUES (?, ?)
+                        INSERT INTO access_tokens (token, user_id, created, updated)
+                        VALUES (?, ?, NOW(), NOW())
                         """,
                 accessToken, userId
         );
