@@ -15,23 +15,27 @@ import org.ideacloud.models.superclass.TimeEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "access_tokens")
-public class AccessToken extends TimeEntity {
+@Table(name = "meeting_notes")
+public class MeetingNote extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "token")
-    private String token;
+    @Column(name = "title")
+    private String title;
+
+    private String body;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+
     @Builder
-    public AccessToken(String token, Long userId) {
-        this.token = token;
+    public MeetingNote(String title, String body, Long userId) {
+        this.title = title;
+        this.body = body;
         this.userId = userId;
     }
 }
