@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
@@ -15,23 +14,23 @@ import org.ideacloud.models.superclass.TimeEntity;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "access_tokens")
-public class AccessToken extends TimeEntity {
+@Table(name = "keyword_histories")
+public class KeywordHistory extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "token")
-    private String token;
+    @Column(name = "keyword_id", nullable = false)
+    private Long keywordId;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "meeting_note_id", nullable = false)
+    private Long meetingNoteId;
 
-    @Builder
-    public AccessToken(String token, Long userId) {
-        this.token = token;
-        this.userId = userId;
+
+    public KeywordHistory(Long keywordId, Long meetingNoteId) {
+        this.keywordId = keywordId;
+        this.meetingNoteId = meetingNoteId;
     }
 }
