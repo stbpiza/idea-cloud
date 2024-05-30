@@ -8,5 +8,5 @@ import java.util.Set;
 
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
-    Set<Keyword> findAllByKeywordIn(List<String> keywords);
+    List<Keyword> findAllByKeywordIn(List<String> keywords);
 }
