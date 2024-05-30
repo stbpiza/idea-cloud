@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
@@ -28,9 +29,13 @@ public class KeywordHistory extends TimeEntity {
     @Column(name = "meeting_note_id", nullable = false)
     private Long meetingNoteId;
 
+    @Column(name = "count", nullable = false)
+    private Integer count;
 
-    public KeywordHistory(Long keywordId, Long meetingNoteId) {
+    @Builder
+    public KeywordHistory(Long keywordId, Long meetingNoteId, Integer count) {
         this.keywordId = keywordId;
         this.meetingNoteId = meetingNoteId;
+        this.count = count;
     }
 }
