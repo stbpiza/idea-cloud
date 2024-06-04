@@ -37,12 +37,12 @@ public class CreateMeetingNoteService {
 
         meetingNoteRepository.save(meetingNote);
 
-        Map<Long, Integer> keywordMap = addKeywords(keywords, meetingNote);
+        Map<Keyword, Integer> keywordMap = addKeywords(keywords, meetingNote);
 
         addKeywordHistories(keywordMap, meetingNote);
     }
 
-    protected Map<Long, Integer> addKeywords(List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords, MeetingNote meetingNote) {
+    protected Map<Keyword, Integer> addKeywords(List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords, MeetingNote meetingNote) {
 
         List<String> keywordStrings = keywords.stream()
                 .map(MeetingNoteCreateDto.AddKeywordToMeetingNoteDto::keyword)
@@ -57,13 +57,13 @@ public class CreateMeetingNoteService {
 
         keywordRepository.saveAll(newKeywords);
 
-        Map<Long, Integer> keywordCountMap = new HashMap<>();
+        Map<Keyword, Integer> keywordCountMap = new HashMap<>();
 
         for (MeetingNoteCreateDto.AddKeywordToMeetingNoteDto dto : keywords) {
             boolean isPut = false;
             for (Keyword keyword : existingKeyword) {
                 if (keyword.getKeyword().equals(dto.keyword())) {
-                    keywordCountMap.put(keyword.getId(), dto.count());
+                    keywordCountMap.put(keyword, dto.count());
                     isPut = true;
                     break;
                 }
@@ -71,7 +71,7 @@ public class CreateMeetingNoteService {
             if (isPut) break;
             for (Keyword keyword : existingKeyword) {
                 if (keyword.getKeyword().equals(dto.keyword())) {
-                    keywordCountMap.put(keyword.getId(), dto.count());
+                    keywordCountMap.put(keyword, dto.count());
                     break;
                 }
             }
@@ -80,13 +80,13 @@ public class CreateMeetingNoteService {
         return keywordCountMap;
     }
 
-    protected void addKeywordHistories(Map<Long, Integer> keywordMap, MeetingNote meetingNote) {
+    protected void addKeywordHistories(Map<Keyword, Integer> keywordMap, MeetingNote meetingNote) {
         List<KeywordHistory> keywordHistories = new ArrayList<>();
 
-        for (Map.Entry<Long, Integer> entry : keywordMap.entrySet()) {
+        for (Map.Entry<Keyword, Integer> entry : keywordMap.entrySet()) {
             keywordHistories.add(KeywordHistory.builder()
-                    .keywordId(entry.getKey())
-                    .meetingNoteId(meetingNote.getId())
+                    .keyword(entry.getKey())
+                    .meetingNote(meetingNote)
                     .count(entry.getValue())
                     .build());
         }
