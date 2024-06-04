@@ -2,9 +2,12 @@ package org.ideacloud.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,19 +26,22 @@ public class KeywordHistory extends TimeEntity {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "keyword_id", nullable = false)
-    private Long keywordId;
 
-    @Column(name = "meeting_note_id", nullable = false)
-    private Long meetingNoteId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "keyword_id", nullable = false)
+    private Keyword keyword;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meeting_note_id", nullable = false)
+    private MeetingNote meetingNote;
 
     @Column(name = "count", nullable = false)
     private Integer count;
 
     @Builder
-    public KeywordHistory(Long keywordId, Long meetingNoteId, Integer count) {
-        this.keywordId = keywordId;
-        this.meetingNoteId = meetingNoteId;
+    public KeywordHistory(Keyword keyword, MeetingNote meetingNote, Integer count) {
+        this.keyword = keyword;
+        this.meetingNote = meetingNote;
         this.count = count;
     }
 }
