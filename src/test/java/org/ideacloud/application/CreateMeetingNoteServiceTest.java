@@ -9,9 +9,13 @@ import org.ideacloud.repositories.KeywordRepository;
 import org.ideacloud.repositories.MeetingNoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -60,7 +64,7 @@ class CreateMeetingNoteServiceTest {
     }
 
     @Test
-    void createMeetingNote() {
+    void createMeetingNote_TEST() {
         CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
 
         given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of());
@@ -68,7 +72,47 @@ class CreateMeetingNoteServiceTest {
         createMeetingNoteService.createMeetingNote(title, body, userId, keywords);
 
         verify(meetingNoteRepository).save(any(MeetingNote.class));
-        verify(keywordRepository, times(1)).saveAll(any(List.class));
-        verify(keywordHistoryRepository, times(1)).saveAll(any(List.class));
+        verify(keywordRepository, times(1)).saveAll(any());
+        verify(keywordHistoryRepository, times(1)).saveAll(any());
+    }
+
+    @Test
+    void addKeywords_TEST() {
+        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
+
+        given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of());
+
+        Map<Keyword, Integer> newKeywords = createMeetingNoteService.addKeywords(keywords);
+
+        assertThat(newKeywords).hasSize(2);
+        for (Keyword keyword : newKeywords.keySet()) {
+            assertThat(keyword.getKeyword()).isIn("keyword", "body");
+        }
+    }
+
+    @Test
+    void getNewKeywords_TEST() {
+        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
+
+        given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of(keyword1));
+
+        List<Keyword> newKeywords = createMeetingNoteService.getNewKeywords(List.of("keyword", "body"), List.of(keyword1));
+
+        assertThat(newKeywords).hasSize(1);
+        assertThat(newKeywords.get(0).getKeyword()).isEqualTo("body");
+    }
+
+    @Test
+    void getKeywordCountMap_TEST() {
+        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
+
+        given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of(keyword1, keyword2));
+
+        Map<Keyword, Integer> keywordCountMap = createMeetingNoteService.getKeywordCountMap(List.of(keyword1, keyword2), keywords);
+
+        assertThat(keywordCountMap).hasSize(2);
+        for (Keyword keyword : keywordCountMap.keySet()) {
+            assertThat(keyword.getKeyword()).isIn("keyword", "body");
+        }
     }
 }
