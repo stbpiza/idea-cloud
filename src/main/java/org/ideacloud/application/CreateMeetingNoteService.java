@@ -12,10 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -37,47 +35,46 @@ public class CreateMeetingNoteService {
 
         meetingNoteRepository.save(meetingNote);
 
-        Map<Keyword, Integer> keywordMap = addKeywords(keywords, meetingNote);
+        Map<Keyword, Integer> keywordMap = addKeywords(keywords);
 
         addKeywordHistories(keywordMap, meetingNote);
     }
 
-    protected Map<Keyword, Integer> addKeywords(List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords, MeetingNote meetingNote) {
+    protected Map<Keyword, Integer> addKeywords(List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {
 
         List<String> keywordStrings = keywords.stream()
                 .map(MeetingNoteCreateDto.AddKeywordToMeetingNoteDto::keyword)
                 .toList();
 
-        List<Keyword> existingKeyword = keywordRepository.findAllByKeywordIn(keywordStrings);
+        List<Keyword> existingKeywords = keywordRepository.findAllByKeywordIn(keywordStrings);
 
-        List<Keyword> newKeywords = keywordStrings.stream()
-                .filter(keyword -> existingKeyword.stream().noneMatch(k -> k.getKeyword().equals(keyword)))
-                .map(Keyword::new)
-                .toList();
+        List<Keyword> newKeywords = getNewKeywords(keywordStrings, existingKeywords);
 
         keywordRepository.saveAll(newKeywords);
 
-        Map<Keyword, Integer> keywordCountMap = new HashMap<>();
+        List<Keyword> allKeywords = new ArrayList<>();
+        allKeywords.addAll(existingKeywords);
+        allKeywords.addAll(newKeywords);
 
-        for (MeetingNoteCreateDto.AddKeywordToMeetingNoteDto dto : keywords) {
-            boolean isPut = false;
-            for (Keyword keyword : existingKeyword) {
-                if (keyword.getKeyword().equals(dto.keyword())) {
-                    keywordCountMap.put(keyword, dto.count());
-                    isPut = true;
-                    break;
-                }
-            }
-            if (isPut) break;
-            for (Keyword keyword : existingKeyword) {
-                if (keyword.getKeyword().equals(dto.keyword())) {
-                    keywordCountMap.put(keyword, dto.count());
-                    break;
-                }
-            }
-        }
+        return getKeywordCountMap(allKeywords, keywords);
+    }
 
-        return keywordCountMap;
+    protected List<Keyword> getNewKeywords(List<String> keywordStrings, List<Keyword> existingKeywords) {
+        return keywordStrings.stream()
+                .filter(keyword -> existingKeywords.stream().noneMatch(k -> k.getKeyword().equals(keyword)))
+                .map(Keyword::new)
+                .toList();
+    }
+
+    protected Map<Keyword, Integer> getKeywordCountMap(List<Keyword> allKeywords, List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {
+        return keywords.stream()
+                .collect(Collectors.toMap(
+                        keywordDto -> allKeywords.stream()
+                                .filter(keyword -> keyword.getKeyword().equals(keywordDto.keyword()))
+                                .findFirst()
+                                .orElseThrow(),
+                        MeetingNoteCreateDto.AddKeywordToMeetingNoteDto::count
+                ));
     }
 
     protected void addKeywordHistories(Map<Keyword, Integer> keywordMap, MeetingNote meetingNote) {
