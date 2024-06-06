@@ -30,7 +30,7 @@ public class LoginService {
     }
 
     private String generateAccessToken(AuthUser authUser) {
-        String id = authUser.id();
+        Long id = authUser.id();
         String accessToken = accessTokenGenerator.generate(id);
         authUserDao.addAccessToken(id, accessToken);
         return accessToken;

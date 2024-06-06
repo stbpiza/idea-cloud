@@ -21,7 +21,7 @@ public class AccessTokenGenerator {
         this.algorithm = Algorithm.HMAC256(secret);
     }
 
-    public String generate(String userId) {
+    public String generate(Long userId) {
         return JWT.create()
                 .withClaim("userId", userId)
                 .withExpiresAt(Instant.now().plus(24, ChronoUnit.HOURS))

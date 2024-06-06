@@ -25,7 +25,7 @@ public class CreateMeetingNoteService {
     private final KeywordRepository keywordRepository;
     private final KeywordHistoryRepository keywordHistoryRepository;
 
-    public void createMeetingNote(String title, String body, Long userId,
+    public String createMeetingNote(String title, String body, Long userId,
                                   List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {
         MeetingNote meetingNote = MeetingNote.builder()
                 .title(title)
@@ -38,6 +38,8 @@ public class CreateMeetingNoteService {
         Map<Keyword, Integer> keywordMap = addKeywords(keywords);
 
         addKeywordHistories(keywordMap, meetingNote);
+
+        return "success";
     }
 
     protected Map<Keyword, Integer> addKeywords(List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {

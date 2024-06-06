@@ -31,7 +31,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth.requestMatchers("/session").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/admin/session").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/users").permitAll())
-            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+            .authorizeHttpRequests(auth -> auth.anyRequest().hasAnyRole("USER", "ADMIN"))
             .addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class);
 
         return http.build();
