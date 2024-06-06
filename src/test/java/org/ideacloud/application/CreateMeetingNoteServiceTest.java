@@ -37,6 +37,7 @@ class CreateMeetingNoteServiceTest {
     private List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords;
     private Keyword keyword1;
     private Keyword keyword2;
+    private MeetingNote meetingNote;
 
     @BeforeEach
     void setUpMockObjects() {
@@ -57,6 +58,11 @@ class CreateMeetingNoteServiceTest {
                
                """;
         userId = 1L;
+        meetingNote = MeetingNote.builder()
+                .title(title)
+                .body(body)
+                .userId(userId)
+                .build();
         keywords = List.of(new MeetingNoteCreateDto.AddKeywordToMeetingNoteDto("keyword", 2),
                             new MeetingNoteCreateDto.AddKeywordToMeetingNoteDto("body", 3));
         keyword1 = new Keyword("keyword");
@@ -113,6 +119,25 @@ class CreateMeetingNoteServiceTest {
         assertThat(keywordCountMap).hasSize(2);
         for (Keyword keyword : keywordCountMap.keySet()) {
             assertThat(keyword.getKeyword()).isIn("keyword", "body");
+        }
+    }
+
+    @Test
+    void addKeywordHistories_TEST() {
+        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
+
+        Map<Keyword, Integer> keywordMap = Map.of(keyword1, 2, keyword2, 3);
+
+        createMeetingNoteService.addKeywordHistories(keywordMap, meetingNote);
+
+        ArgumentCaptor<List<KeywordHistory>> keywordHistoryCaptor = ArgumentCaptor.forClass(List.class);
+        verify(keywordHistoryRepository).saveAll(keywordHistoryCaptor.capture());
+
+        List<KeywordHistory> keywordHistories = keywordHistoryCaptor.getValue();
+        assertThat(keywordHistories).hasSize(2);
+        for (KeywordHistory keywordHistory : keywordHistories) {
+            assertThat(keywordHistory.getKeyword()).isIn(keyword1, keyword2);
+            assertThat(keywordHistory.getCount()).isIn(2, 3);
         }
     }
 }

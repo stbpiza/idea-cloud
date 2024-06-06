@@ -47,9 +47,9 @@ public class SignupService {
     }
 
     private String createAccessToken(Long userId) {
-        String accessToken = accessTokenGenerator.generate(userId.toString());
+        String accessToken = accessTokenGenerator.generate(userId);
 
-        authUserDao.addAccessToken(userId.toString(), accessToken);
+        authUserDao.addAccessToken(userId, accessToken);
 
         return accessToken;
     }

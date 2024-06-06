@@ -22,7 +22,7 @@ public class AuthUserDao {
             }
 
             AuthUser authUser = AuthUser.of(
-                    resultSet.getString("id"),
+                    resultSet.getLong("id"),
                     email,
                     resultSet.getString("password"),
                     resultSet.getString("role")
@@ -32,7 +32,7 @@ public class AuthUserDao {
         }, email);
     }
 
-    public void addAccessToken(String userId, String accessToken) {
+    public void addAccessToken(Long userId, String accessToken) {
         jdbcTemplate.update("""
                         INSERT INTO access_tokens (token, user_id, created, updated)
                         VALUES (?, ?, NOW(), NOW())
@@ -55,7 +55,7 @@ public class AuthUserDao {
             }
 
             AuthUser authUser = AuthUser.authenticated(
-                    resultSet.getString("user_id"),
+                    resultSet.getLong("user_id"),
                     resultSet.getString("role"),
                     accessToken
             );
