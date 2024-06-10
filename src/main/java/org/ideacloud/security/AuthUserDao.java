@@ -55,7 +55,7 @@ public class AuthUserDao {
             }
 
             AuthUser authUser = AuthUser.authenticated(
-                    resultSet.getLong("user_id"),
+                    resultSet.getLong("id"),
                     resultSet.getString("role"),
                     accessToken
             );

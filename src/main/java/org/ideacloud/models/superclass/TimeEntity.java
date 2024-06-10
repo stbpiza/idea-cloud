@@ -23,4 +23,12 @@ public class TimeEntity {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated;
 
+
+    public LocalDateTime created() {
+        return created;
+    }
+
+    public LocalDateTime updated() {
+        return updated;
+    }
 }

@@ -50,4 +50,24 @@ public class User extends TimeEntity {
     public User (Long userId) {
         this.id = userId;
     }
+
+    public Long id() {
+        return id;
+    }
+
+    public String email() {
+        return email;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public String password() {
+        return password;
+    }
+
+    public Role role() {
+        return role;
+    }
 }
