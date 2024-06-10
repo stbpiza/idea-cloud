@@ -5,6 +5,7 @@ import org.ideacloud.dtos.MeetingNoteCreateDto;
 import org.ideacloud.models.Keyword;
 import org.ideacloud.models.KeywordHistory;
 import org.ideacloud.models.MeetingNote;
+import org.ideacloud.models.User;
 import org.ideacloud.repositories.KeywordHistoryRepository;
 import org.ideacloud.repositories.KeywordRepository;
 import org.ideacloud.repositories.MeetingNoteRepository;
@@ -30,7 +31,7 @@ public class CreateMeetingNoteService {
         MeetingNote meetingNote = MeetingNote.builder()
                 .title(title)
                 .body(body)
-                .userId(userId)
+                .user(new User(userId))
                 .build();
 
         meetingNoteRepository.save(meetingNote);

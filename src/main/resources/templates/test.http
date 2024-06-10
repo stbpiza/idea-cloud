@@ -20,7 +20,7 @@ Content-Type: application/json
 ###
 POST localhost:8888/meeting-notes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxNzc2ODE5MX0.csSOftreTIpJNpQaCDL_sbHGSJXJG4KoFB9tFadaC6I
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxODExNDQ2N30.XN6hSt8DQ9hn8EETfwBFY1oMUrJkpdZERFvjH1D10Mk
 
 {
     "title": "Meeting 1",
