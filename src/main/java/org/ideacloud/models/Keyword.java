@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
 
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "keywords")
@@ -26,8 +25,15 @@ public class Keyword extends TimeEntity {
     private String keyword;
 
 
-
     public Keyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public Long id() {
+        return id;
+    }
+
+    public String keyword() {
+        return keyword;
     }
 }

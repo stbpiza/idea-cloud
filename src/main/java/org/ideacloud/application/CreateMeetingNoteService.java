@@ -64,7 +64,7 @@ public class CreateMeetingNoteService {
 
     protected List<Keyword> getNewKeywords(List<String> keywordStrings, List<Keyword> existingKeywords) {
         return keywordStrings.stream()
-                .filter(keyword -> existingKeywords.stream().noneMatch(k -> k.getKeyword().equals(keyword)))
+                .filter(keyword -> existingKeywords.stream().noneMatch(k -> k.keyword().equals(keyword)))
                 .map(Keyword::new)
                 .toList();
     }
@@ -73,7 +73,7 @@ public class CreateMeetingNoteService {
         return keywords.stream()
                 .collect(Collectors.toMap(
                         keywordDto -> allKeywords.stream()
-                                .filter(keyword -> keyword.getKeyword().equals(keywordDto.keyword()))
+                                .filter(keyword -> keyword.keyword().equals(keywordDto.keyword()))
                                 .findFirst()
                                 .orElseThrow(),
                         MeetingNoteCreateDto.AddKeywordToMeetingNoteDto::count
