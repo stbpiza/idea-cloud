@@ -29,7 +29,7 @@ public class SignupService {
 
         User user = createUser(email, name, password);
 
-        return createAccessToken(user.getId());
+        return createAccessToken(user.id());
     }
 
     private User createUser(String email, String name, String password) {

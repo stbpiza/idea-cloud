@@ -4,6 +4,7 @@ import org.ideacloud.dtos.MeetingNoteCreateDto;
 import org.ideacloud.models.Keyword;
 import org.ideacloud.models.KeywordHistory;
 import org.ideacloud.models.MeetingNote;
+import org.ideacloud.models.User;
 import org.ideacloud.repositories.KeywordHistoryRepository;
 import org.ideacloud.repositories.KeywordRepository;
 import org.ideacloud.repositories.MeetingNoteRepository;
@@ -61,7 +62,7 @@ class CreateMeetingNoteServiceTest {
         meetingNote = MeetingNote.builder()
                 .title(title)
                 .body(body)
-                .userId(userId)
+                .user(new User(userId))
                 .build();
         keywords = List.of(new MeetingNoteCreateDto.AddKeywordToMeetingNoteDto("keyword", 2),
                             new MeetingNoteCreateDto.AddKeywordToMeetingNoteDto("body", 3));
@@ -92,7 +93,7 @@ class CreateMeetingNoteServiceTest {
 
         assertThat(newKeywords).hasSize(2);
         for (Keyword keyword : newKeywords.keySet()) {
-            assertThat(keyword.getKeyword()).isIn("keyword", "body");
+            assertThat(keyword.keyword()).isIn("keyword", "body");
         }
     }
 
@@ -105,7 +106,7 @@ class CreateMeetingNoteServiceTest {
         List<Keyword> newKeywords = createMeetingNoteService.getNewKeywords(List.of("keyword", "body"), List.of(keyword1));
 
         assertThat(newKeywords).hasSize(1);
-        assertThat(newKeywords.get(0).getKeyword()).isEqualTo("body");
+        assertThat(newKeywords.get(0).keyword()).isEqualTo("body");
     }
 
     @Test
@@ -118,7 +119,7 @@ class CreateMeetingNoteServiceTest {
 
         assertThat(keywordCountMap).hasSize(2);
         for (Keyword keyword : keywordCountMap.keySet()) {
-            assertThat(keyword.getKeyword()).isIn("keyword", "body");
+            assertThat(keyword.keyword()).isIn("keyword", "body");
         }
     }
 
