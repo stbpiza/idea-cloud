@@ -6,7 +6,7 @@ public record MeetingNoteDto(
         Long id,
         String title,
         String body,
-        LocalDateTime createdAt,
+        LocalDateTime created,
         Long userId,
         String userName
 ) {
