@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,6 +38,9 @@ public class MeetingNote extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "meetingNote")
+    private List<KeywordHistory> keywordHistories;
 
 
     @Builder
@@ -59,5 +64,14 @@ public class MeetingNote extends TimeEntity {
 
     public User user() {
         return user;
+    }
+
+    public List<KeywordHistory> keywordHistories() {
+        return keywordHistories;
+    }
+
+    public void update(String title, String body) {
+        this.title = title;
+        this.body = body;
     }
 }

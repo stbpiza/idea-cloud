@@ -137,8 +137,8 @@ class CreateMeetingNoteServiceTest {
         List<KeywordHistory> keywordHistories = keywordHistoryCaptor.getValue();
         assertThat(keywordHistories).hasSize(2);
         for (KeywordHistory keywordHistory : keywordHistories) {
-            assertThat(keywordHistory.getKeyword()).isIn(keyword1, keyword2);
-            assertThat(keywordHistory.getCount()).isIn(2, 3);
+            assertThat(keywordHistory.keyword()).isIn(keyword1, keyword2);
+            assertThat(keywordHistory.count()).isIn(2, 3);
         }
     }
 }
