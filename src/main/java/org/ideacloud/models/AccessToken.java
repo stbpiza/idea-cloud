@@ -34,4 +34,16 @@ public class AccessToken extends TimeEntity {
         this.token = token;
         this.userId = userId;
     }
+
+    public Long id() {
+        return id;
+    }
+
+    public String token() {
+        return token;
+    }
+
+    public Long userId() {
+        return userId;
+    }
 }
