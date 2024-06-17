@@ -42,6 +42,10 @@ class GetMeetingNoteDetailServiceTest {
 
         given(meetingNoteRepository.findById(1L))
                 .willReturn(Optional.of(meetingNote));
+        given(meetingNote.title())
+                .willReturn("title");
+        given(meetingNote.body())
+                .willReturn("body");
         given(meetingNote.keywordHistories())
                 .willReturn(keywordHistories);
         given(meetingNote.user())
@@ -51,8 +55,8 @@ class GetMeetingNoteDetailServiceTest {
 
         MeetingNoteDetailDto meetingNoteDetail = getMeetingNoteDetailService.getMeetingNoteDetail(1L);
 
-//        assertThat(meetingNoteDetail.title()).isEqualTo("title");
-//        assertThat(meetingNoteDetail.body()).isEqualTo("body");
+        assertThat(meetingNoteDetail.title()).isEqualTo("title");
+        assertThat(meetingNoteDetail.body()).isEqualTo("body");
         assertThat(meetingNoteDetail.userName()).isEqualTo("name");
         assertThat(meetingNoteDetail.keywords()).contains("keyword");
 
