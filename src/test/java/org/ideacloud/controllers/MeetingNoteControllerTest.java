@@ -2,8 +2,10 @@ package org.ideacloud.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ideacloud.application.CreateMeetingNoteService;
+import org.ideacloud.application.GetMeetingNoteDetailService;
 import org.ideacloud.application.GetMeetingNoteListService;
 import org.ideacloud.dtos.MeetingNoteCreateDto;
+import org.ideacloud.dtos.MeetingNoteDetailDto;
 import org.ideacloud.dtos.MeetingNoteDto;
 import org.ideacloud.dtos.MeetingNoteListDto;
 import org.junit.jupiter.api.DisplayName;
@@ -38,6 +40,9 @@ class MeetingNoteControllerTest extends ControllerTest {
 
     @MockBean
     private GetMeetingNoteListService getMeetingNoteListService;
+
+    @MockBean
+    private GetMeetingNoteDetailService getMeetingNoteDetailService;
 
     @Test
     @DisplayName("POST /meeting-notes")
@@ -82,4 +87,20 @@ class MeetingNoteControllerTest extends ControllerTest {
                 .andExpect(content().string(containsString(title)));
     }
 
+
+    @Test
+    @DisplayName("GET /meeting-notes/{id}")
+    void detail() throws Exception {
+        MeetingNoteDetailDto meetingNoteDto = new MeetingNoteDetailDto(
+                1L, "title", "body", LocalDateTime.now(), 1L, "user", List.of("keyword")
+        );
+
+        given(getMeetingNoteDetailService.getMeetingNoteDetail(1L))
+                .willReturn(meetingNoteDto);
+
+        mockMvc.perform(get("/meeting-notes/1")
+                        .header("Authorization", "Bearer " + userAccessToken))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("title")));
+    }
 }
