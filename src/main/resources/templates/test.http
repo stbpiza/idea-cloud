@@ -41,3 +41,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4c
 GET localhost:8888/meeting-notes?page=0&size=10
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxODI4ODc3OH0.H9y7FfUfTP_z-swo_R1YBZSZmGuZUNASh_Tq7UcMJD8
+
+###
+GET localhost:8888/meeting-notes/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxODgwMzYxNH0.sx__IBTZcV7r2CobcluJ-Lx-CVEY8_9vwbP-Jr_m5Uk

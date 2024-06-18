@@ -28,12 +28,19 @@ public class Keyword extends TimeEntity {
     @Column(name = "keyword", nullable = false)
     private String keyword;
 
+    @Column()
+    private Integer priority;
+
+    private Integer count;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
     private List<KeywordHistory> keywordHistories;
 
 
     public Keyword(String keyword) {
         this.keyword = keyword;
+        this.priority = 0;
+        this.count = 0;
     }
 
     public Keyword(Long id) {
@@ -48,7 +55,24 @@ public class Keyword extends TimeEntity {
         return keyword;
     }
 
+    public Integer priority() {
+        return priority;
+    }
+
+    public Integer count() {
+        return count;
+    }
+
     public List<KeywordHistory> keywordHistories() {
         return keywordHistories;
+    }
+
+
+    public void updateKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public void updatePriority(Integer priority) {
+        this.priority = priority;
     }
 }
