@@ -75,4 +75,8 @@ public class Keyword extends TimeEntity {
     public void updatePriority(Integer priority) {
         this.priority = priority;
     }
+
+    public void updateCount(Integer count) {
+        this.count = count;
+    }
 }

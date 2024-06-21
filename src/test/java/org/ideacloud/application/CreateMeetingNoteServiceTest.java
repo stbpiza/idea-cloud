@@ -31,6 +31,8 @@ class CreateMeetingNoteServiceTest {
     private MeetingNoteRepository meetingNoteRepository;
     private KeywordRepository keywordRepository;
     private KeywordHistoryRepository keywordHistoryRepository;
+    private CreateKeywordService createKeywordService;
+    private CreateMeetingNoteService createMeetingNoteService;
 
     private String title;
     private String body;
@@ -45,6 +47,14 @@ class CreateMeetingNoteServiceTest {
         meetingNoteRepository = mock(MeetingNoteRepository.class);
         keywordRepository = mock(KeywordRepository.class);
         keywordHistoryRepository = mock(KeywordHistoryRepository.class);
+        createKeywordService = mock(CreateKeywordService.class);
+
+        createMeetingNoteService = new CreateMeetingNoteService(
+                                            meetingNoteRepository,
+                                            keywordRepository,
+                                            keywordHistoryRepository,
+                                            createKeywordService
+                                    );
     }
 
     @BeforeEach
@@ -72,7 +82,6 @@ class CreateMeetingNoteServiceTest {
 
     @Test
     void createMeetingNote_TEST() {
-        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
 
         given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of());
 
@@ -85,7 +94,6 @@ class CreateMeetingNoteServiceTest {
 
     @Test
     void addKeywords_TEST() {
-        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
 
         given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of());
 
@@ -99,7 +107,6 @@ class CreateMeetingNoteServiceTest {
 
     @Test
     void getNewKeywords_TEST() {
-        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
 
         given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of(keyword1));
 
@@ -111,7 +118,6 @@ class CreateMeetingNoteServiceTest {
 
     @Test
     void getKeywordCountMap_TEST() {
-        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
 
         given(keywordRepository.findAllByKeywordIn(List.of("keyword", "body"))).willReturn(List.of(keyword1, keyword2));
 
@@ -125,7 +131,6 @@ class CreateMeetingNoteServiceTest {
 
     @Test
     void addKeywordHistories_TEST() {
-        CreateMeetingNoteService createMeetingNoteService = new CreateMeetingNoteService(meetingNoteRepository, keywordRepository, keywordHistoryRepository);
 
         Map<Keyword, Integer> keywordMap = Map.of(keyword1, 2, keyword2, 3);
 
