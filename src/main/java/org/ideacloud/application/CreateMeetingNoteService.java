@@ -25,6 +25,7 @@ public class CreateMeetingNoteService {
     private final MeetingNoteRepository meetingNoteRepository;
     private final KeywordRepository keywordRepository;
     private final KeywordHistoryRepository keywordHistoryRepository;
+    private final CreateKeywordService createKeywordService;
 
     public String createMeetingNote(String title, String body, Long userId,
                                   List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {
@@ -37,6 +38,8 @@ public class CreateMeetingNoteService {
         meetingNoteRepository.save(meetingNote);
 
         Map<Keyword, Integer> keywordMap = addKeywords(keywords);
+
+        createKeywordService.updateKeywordCount(keywordMap, meetingNote.id());
 
         addKeywordHistories(keywordMap, meetingNote);
 
