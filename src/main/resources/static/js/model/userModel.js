@@ -1,9 +1,12 @@
 // document.write('<script src="/static/js/controller/userController.js"></script>')
-
-
 import { signup } from '../controller/userController'
 import { signupRequest } from '../dto/user'
 
+
+export default class UserModel {
+    constructor() {
+    }
+}
 
 
 

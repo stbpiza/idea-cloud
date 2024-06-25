@@ -45,14 +45,14 @@ class MeetingNoteControllerTest extends ControllerTest {
     private GetMeetingNoteDetailService getMeetingNoteDetailService;
 
     @Test
-    @DisplayName("POST /meeting-notes")
+    @DisplayName("POST /api/meeting-notes")
     void createMeetingNote() throws Exception {
         MeetingNoteCreateDto dto = new MeetingNoteCreateDto("title", "body", null);
 
 //        given(createMeetingNoteService.createMeetingNote(dto.title(), dto.body(), USER_ID, dto.keywords()))
 //                .willReturn("success");
 
-        mockMvc.perform(post("/meeting-notes")
+        mockMvc.perform(post("/api/meeting-notes")
                         .header("Authorization", "Bearer " + userAccessToken)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(dto)))
@@ -63,7 +63,7 @@ class MeetingNoteControllerTest extends ControllerTest {
     }
 
     @Test
-    @DisplayName("GET /meeting-notes")
+    @DisplayName("GET /api/meeting-notes")
     void listMeetingNotes() throws Exception {
 
         int page = 1;
@@ -79,7 +79,7 @@ class MeetingNoteControllerTest extends ControllerTest {
         given(getMeetingNoteListService.getMeetingNoteList(page, size))
                 .willReturn(meetingNoteListDto);
 
-        mockMvc.perform(get("/meeting-notes")
+        mockMvc.perform(get("/api/meeting-notes")
                         .header("Authorization", "Bearer " + userAccessToken)
                         .param("page", String.valueOf(page))
                         .param("size", String.valueOf(size)))
@@ -89,7 +89,7 @@ class MeetingNoteControllerTest extends ControllerTest {
 
 
     @Test
-    @DisplayName("GET /meeting-notes/{id}")
+    @DisplayName("GET /api/meeting-notes/{id}")
     void detail() throws Exception {
         MeetingNoteDetailDto meetingNoteDto = new MeetingNoteDetailDto(
                 1L, "title", "body", LocalDateTime.now(), 1L, "user", List.of("keyword")
@@ -98,7 +98,7 @@ class MeetingNoteControllerTest extends ControllerTest {
         given(getMeetingNoteDetailService.getMeetingNoteDetail(1L))
                 .willReturn(meetingNoteDto);
 
-        mockMvc.perform(get("/meeting-notes/1")
+        mockMvc.perform(get("/api/meeting-notes/1")
                         .header("Authorization", "Bearer " + userAccessToken))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("title")));
