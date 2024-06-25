@@ -32,7 +32,7 @@ class KeywordControllerTest extends ControllerTest {
 
 
     @Test
-    @DisplayName("GET /keywords")
+    @DisplayName("GET /api/keywords")
     void listKeywords() throws Exception {
         // given
         var keywordListDto = new KeywordListDto(List.of(
@@ -44,7 +44,7 @@ class KeywordControllerTest extends ControllerTest {
                 .willReturn(keywordListDto);
 
         // when
-        mockMvc.perform(get("/keywords")
+        mockMvc.perform(get("/api/keywords")
                         .header("Authorization", "Bearer " + userAccessToken)
                         .param("page", "0")
                         .param("size", "10"))

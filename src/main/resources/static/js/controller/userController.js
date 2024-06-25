@@ -1,6 +1,11 @@
 import { get, post } from './controller';
 
-
+export default class UserController {
+    constructor(view, model) {
+        this.view = view;
+        this.model = model;
+    }
+}
 
 
 export function signup(body) {

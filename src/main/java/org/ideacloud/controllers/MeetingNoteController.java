@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/meeting-notes")
+@RequestMapping("/api/meeting-notes")
 public class MeetingNoteController {
 
     private final CreateMeetingNoteService createMeetingNoteService;
