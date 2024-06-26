@@ -33,8 +33,8 @@ public class WebSecurityConfig {
                         ,"/"
                         ,"/index"
                         ,"/mypage"
-                        ,"/login"
-                        ,"/register"
+                        ,"/signin"
+                        ,"/signup"
                         ,"/static/**"
                 );
     }
