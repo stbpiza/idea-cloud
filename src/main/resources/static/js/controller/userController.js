@@ -1,12 +1,7 @@
-import { get, post } from './controller';
-import { getSignupBody } from '../model/userModel';
+import { get, post } from './controller.js';
+import { getSignupBody } from '../model/userModel.js';
 
-export default class UserController {
-    constructor(view, model) {
-        this.view = view;
-        this.model = model;
-    }
-}
+export { signupRequest }
 
 
 export function signup() {
@@ -22,7 +17,7 @@ export function signup() {
 
 
 function signupRequest(body) {
-    const response = post('/users', '', body);
+    const response = post('/api/users', '', body);
 
     return response.then(response => {
         return response.json();

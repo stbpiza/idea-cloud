@@ -1,4 +1,4 @@
-
+export { get, post }
 
 export default class Controller {
     constructor(view, model) {
@@ -35,11 +35,11 @@ function sendRequest(method, path, query, body) {
 
 
 
-export function get(path, query) {
+function get(path, query) {
     return sendRequest('GET', path, query);
 }
 
-export function post(path, query, body) {
+function post(path, query, body) {
     return sendRequest('POST', path, query, body);
 }
 
