@@ -1,5 +1,7 @@
-document.write('<script src="/static/js/controller/userController.js"></script>')
-// import { signup } from './controller/userController'
+import { signup } from './controller/userController.js'
 
+export default class User {
 
-document.querySelector(".signup").addEventListener("click", signup());
+}
+
+document.querySelector("#signup").addEventListener("click", signup);
