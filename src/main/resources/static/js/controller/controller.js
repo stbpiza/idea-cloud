@@ -1,14 +1,5 @@
 export { get, post }
 
-export default class Controller {
-    constructor(view, model) {
-        this.view = view;
-        this.model = model;
-    }
-}
-
-
-
 
 
 function sendRequest(method, path, query, body) {

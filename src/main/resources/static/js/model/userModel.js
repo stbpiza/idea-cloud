@@ -3,10 +3,6 @@ import { signupRequest } from '../controller/userController.js'
 import { signupRequestBody } from '../dto/user.js'
 
 
-export default class UserModel {
-    constructor() {
-    }
-}
 
 
 
@@ -23,4 +19,7 @@ export function getSignupBody() {
     return signupRequestBody
 }
 
+export function saveToken(token) {
+    window.localStorage.setItem('token', token);
+}
 

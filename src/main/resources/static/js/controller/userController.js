@@ -1,5 +1,6 @@
 import { get, post } from './controller.js';
-import { getSignupBody } from '../model/userModel.js';
+import { getSignupBody, saveToken } from '../model/userModel.js';
+import { signUpSuccess, signUpFail } from '../view/userView.js';
 
 export { signupRequest }
 
@@ -10,6 +11,13 @@ export function signup() {
 
     signupRequest(signupBody).then(response => {
         console.log(response);
+
+        if (response.status === 201) {
+            saveToken();
+            signUpSuccess();
+        } else {
+            signUpFail();
+        }
     });
 }
 
@@ -17,9 +25,5 @@ export function signup() {
 
 
 function signupRequest(body) {
-    const response = post('/api/users', '', body);
-
-    return response.then(response => {
-        return response.json();
-    });
+    return  post('/api/users', '', body);
 }
