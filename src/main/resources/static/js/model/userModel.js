@@ -11,7 +11,11 @@ export function getSignupBody() {
     const inputEmail = document.querySelector("#email").value;
     const inputName = document.querySelector("#name").value;
     const inputPassword = document.querySelector("#password").value;
+    const inputPasswordCheck = document.querySelector("#password-check").value;
 
+    if (inputPassword !== inputPasswordCheck) {
+        return;
+    }
     signupRequestBody.email = inputEmail;
     signupRequestBody.name = inputName;
     signupRequestBody.password = inputPassword;
