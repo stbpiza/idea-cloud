@@ -14,7 +14,7 @@ export function getSignupBody() {
     const inputPasswordCheck = document.querySelector("#password-check").value;
 
     if (inputPassword !== inputPasswordCheck) {
-        return;
+        return "passwordNotMatched";
     }
     signupRequestBody.email = inputEmail;
     signupRequestBody.name = inputName;
