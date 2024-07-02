@@ -1,15 +1,17 @@
 import { get, post } from './controller.js';
 import { getSignupBody, saveToken } from '../model/userModel.js';
-import { signUpSuccess, signUpFail, passwordCheckFail } from '../view/userView.js';
+import { signUpSuccess, signUpFail, passwordCheckFail, messageClear } from '../view/userView.js';
 
 export { signupRequest }
 
 
 export function signup() {
 
+    messageClear();
+
     let signupBody = getSignupBody();
-    console.log(signupBody)
-    if (signupBody === undefined) {
+    console.log("signupBody : ", signupBody)
+    if (signupBody === "passwordNotMatched") {
         passwordCheckFail();
 
     } else {
