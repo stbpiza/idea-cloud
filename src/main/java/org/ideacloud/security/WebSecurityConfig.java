@@ -46,7 +46,7 @@ public class WebSecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.NEVER))
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/session").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/admin/session").permitAll())
-            .authorizeHttpRequests(auth -> auth.requestMatchers("/api/users").permitAll())
+            .authorizeHttpRequests(auth -> auth.requestMatchers("/api/users/**").permitAll())
             .authorizeHttpRequests(auth -> auth.anyRequest().hasAnyRole("USER", "ADMIN"))
             .addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class);
 

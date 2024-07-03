@@ -1,9 +1,14 @@
 // document.write('<script src="/static/js/controller/userController.js"></script>')
-import { signupRequest } from '../controller/userController.js'
-import { signupRequestBody } from '../dto/user.js'
+import { signupRequestBody, emailCheckRequestBody } from '../dto/user.js'
 
 
 
+export function getEmailCheckBody() {
+    const inputEmail = document.querySelector("#email").value;
+    emailCheckRequestBody.email = inputEmail;
+    return emailCheckRequestBody
+
+}
 
 
 export function getSignupBody() {

@@ -8,6 +8,14 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8888/api/users/check-email
+Content-Type: application/json
+
+{
+  "email": "ab0147@naver.com"
+}
+
+###
 POST http://localhost:8888/session
 Content-Type: application/json
 
