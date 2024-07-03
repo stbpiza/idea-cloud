@@ -2,7 +2,9 @@ package org.ideacloud.controllers;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.ideacloud.application.CheckEmailService;
 import org.ideacloud.application.SignupService;
+import org.ideacloud.dtos.EmailCheckDto;
 import org.ideacloud.dtos.SignupRequestDto;
 import org.ideacloud.dtos.SignupResultDto;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final SignupService signupService;
+    private final CheckEmailService checkEmailService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -29,5 +32,13 @@ public class UserController {
         );
 
         return new SignupResultDto(accessToken);
+    }
+
+    @PostMapping("/check-email")
+    @ResponseStatus(HttpStatus.OK)
+    public String checkEmail(@Valid @RequestBody EmailCheckDto emailCheckDto) {
+        checkEmailService.checkEmail(emailCheckDto.email().trim());
+
+        return "OK";
     }
 }
