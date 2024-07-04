@@ -32,3 +32,12 @@ export function saveToken(token) {
     window.localStorage.setItem('token', token);
 }
 
+export function checkNameInput() {
+    const inputName = document.querySelector("#name").value;
+    return inputName !== "";
+}
+
+export function checkPasswordInput() {
+    const inputEmail = document.querySelector("#password").value;
+    return inputEmail !== "";
+}
