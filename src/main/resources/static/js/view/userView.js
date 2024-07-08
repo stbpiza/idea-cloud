@@ -2,7 +2,7 @@
 export function signUpSuccess() {
     console.log("회원가입 성공");
     alert("회원가입이 완료되었습니다.");
-    location.href = "/login";
+    location.href = "/signin";
 }
 
 export function signUpBadRequest() {
