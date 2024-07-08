@@ -5,6 +5,7 @@ import {
     getEmailCheckBody,
     checkNameInput,
     checkPasswordInput,
+    checkPasswordSame,
 } from '../model/userModel.js';
 import {
     signUpSuccess,
@@ -48,6 +49,11 @@ export function updateValidName() {
 
 export function updateValidPassword(valid) {
     inputValid.validPassword = checkPasswordInput();
+    if (checkPasswordSame()) {
+        messageClear();
+    } else {
+        passwordCheckFail();
+    }
     buttonUpdate();
 }
 

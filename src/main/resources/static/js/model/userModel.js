@@ -38,6 +38,12 @@ export function checkNameInput() {
 }
 
 export function checkPasswordInput() {
-    const inputEmail = document.querySelector("#password").value;
-    return inputEmail !== "";
+    const inputPassword = document.querySelector("#password").value;
+    return inputPassword !== "";
+}
+
+export function checkPasswordSame() {
+    const inputPassword = document.querySelector("#password").value;
+    const inputPasswordCheck = document.querySelector("#password-check").value;
+    return inputPassword === inputPasswordCheck;
 }

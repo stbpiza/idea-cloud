@@ -10,3 +10,4 @@ document.querySelector("#signup").addEventListener("click", signup);
 document.querySelector("#email").addEventListener("input", debounce(checkEmail, 1000));
 document.querySelector("#name").addEventListener("input", updateValidName);
 document.querySelector("#password").addEventListener("input", updateValidPassword);
+document.querySelector("#password-check").addEventListener("input", updateValidPassword);
