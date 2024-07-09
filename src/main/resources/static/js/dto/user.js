@@ -1,6 +1,6 @@
 
 
-export let signupRequestBody = {
+export let signUpRequestBody = {
     email: '',
     name: '',
     password: '',
@@ -8,4 +8,9 @@ export let signupRequestBody = {
 
 export let emailCheckRequestBody = {
     email: '',
+}
+
+export let signInRequestBody = {
+    email: '',
+    password: '',
 }
