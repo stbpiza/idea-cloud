@@ -138,11 +138,13 @@ export function signIn() {
     signInRequest(signInBody).then(response => {
         console.log(response);
 
-        if (response.status === 200) {
-            saveToken(response.data.token);
-            location.href = "/";
+        if (response.status === 201) {
+            response.json().then(data => {
+                saveToken(data.accessToken);
+                location.href = "/";
+            });
         } else if (response.status === 400) {
-            alert("입력값이 잘못되었습니다.");
+            alert("email 또는 password가 일치하지 않습니다.");
         } else {
             alert("로그인에 실패하였습니다.");
         }
