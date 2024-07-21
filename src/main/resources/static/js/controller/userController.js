@@ -1,11 +1,12 @@
 import { get, post } from './controller.js';
 import {
-    getSignupBody,
+    getSignUpBody,
     saveToken,
     getEmailCheckBody,
     checkNameInput,
     checkPasswordInput,
     checkPasswordSame,
+    getSignInBody,
 } from '../model/userModel.js';
 import {
     signUpSuccess,
@@ -31,24 +32,27 @@ export const debounce = (callback, delay) => {
     };
 };
 
-const inputValid = {
+// 회원가입
+// ==============================
+
+const signUpInputValid = {
      validEmail : false,
      validName : false,
      validPassword : false,
 }
 
 export function updateValidEmail(valid) {
-    inputValid.validEmail = valid;
+    signUpInputValid.validEmail = valid;
     buttonUpdate();
 }
 
 export function updateValidName() {
-    inputValid.validName = checkNameInput();
+    signUpInputValid.validName = checkNameInput();
     buttonUpdate();
 }
 
-export function updateValidPassword(valid) {
-    inputValid.validPassword = checkPasswordInput();
+export function updateValidPassword() {
+    signUpInputValid.validPassword = checkPasswordInput();
     if (checkPasswordSame()) {
         messageClear();
     } else {
@@ -58,15 +62,15 @@ export function updateValidPassword(valid) {
 }
 
 function buttonUpdate() {
-    if (isValid()) {
+    if (signUpInputIsValid()) {
         btnActive();
     } else {
         btnDisabled();
     }
 }
 
-function isValid() {
-    return inputValid.validEmail && inputValid.validName && inputValid.validPassword;
+function signUpInputIsValid() {
+    return signUpInputValid.validEmail && signUpInputValid.validName && signUpInputValid.validPassword;
 }
 
 export function checkEmail() {
@@ -99,18 +103,18 @@ export function checkEmail() {
 
 }
 
-export function signup() {
+export function signUp() {
 
     messageClear();
 
-    let signupBody = getSignupBody();
+    let signupBody = getSignUpBody();
     console.log("signupBody : ", signupBody)
     if (signupBody === "passwordNotMatched") {
         passwordCheckFail();
         updateValidPassword(false);
     } else {
 
-        signupRequest(signupBody).then(response => {
+        signUpRequest(signupBody).then(response => {
             console.log(response);
 
             if (response.status === 201) {
@@ -126,11 +130,40 @@ export function signup() {
 }
 
 
+// 로그인
+// ==============================
+
+export function signIn() {
+
+    let signInBody = getSignInBody();
+
+    signInRequest(signInBody).then(response => {
+        console.log(response);
+
+        if (response.status === 201) {
+            response.json().then(data => {
+                saveToken(data.accessToken);
+                location.href = "/";
+            });
+        } else if (response.status === 400) {
+            alert("email 또는 password가 일치하지 않습니다.");
+        } else {
+            alert("로그인에 실패하였습니다.");
+        }
+    });
 
 
-function signupRequest(body) {
+}
+
+
+
+
+function signUpRequest(body) {
     return  post('/api/users', '', body);
 }
 function emailCheckRequest(body) {
     return post('/api/users/check-email', '', body);
+}
+function signInRequest(body) {
+    return post('/api/session', '', body);
 }

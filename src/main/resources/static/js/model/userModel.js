@@ -1,7 +1,11 @@
 // document.write('<script src="/static/js/controller/userController.js"></script>')
-import { signupRequestBody, emailCheckRequestBody } from '../dto/user.js'
+import {
+    signUpRequestBody,
+    emailCheckRequestBody,
+    signInRequestBody
+} from '../dto/user.js'
 
-
+// 회원가입
 
 export function getEmailCheckBody() {
     const inputEmail = document.querySelector("#email").value;
@@ -10,8 +14,7 @@ export function getEmailCheckBody() {
 
 }
 
-
-export function getSignupBody() {
+export function getSignUpBody() {
 
     const inputEmail = document.querySelector("#email").value;
     const inputName = document.querySelector("#name").value;
@@ -21,15 +24,11 @@ export function getSignupBody() {
     if (inputPassword !== inputPasswordCheck) {
         return "passwordNotMatched";
     }
-    signupRequestBody.email = inputEmail;
-    signupRequestBody.name = inputName;
-    signupRequestBody.password = inputPassword;
+    signUpRequestBody.email = inputEmail;
+    signUpRequestBody.name = inputName;
+    signUpRequestBody.password = inputPassword;
 
-    return signupRequestBody
-}
-
-export function saveToken(token) {
-    window.localStorage.setItem('token', token);
+    return signUpRequestBody
 }
 
 export function checkNameInput() {
@@ -46,4 +45,25 @@ export function checkPasswordSame() {
     const inputPassword = document.querySelector("#password").value;
     const inputPasswordCheck = document.querySelector("#password-check").value;
     return inputPassword === inputPasswordCheck;
+}
+
+
+
+// 로그인
+
+export function getSignInBody() {
+    const inputEmail = document.querySelector("#email").value;
+    const inputPassword = document.querySelector("#password").value;
+    signInRequestBody.email = inputEmail;
+    signInRequestBody.password = inputPassword;
+    return signInRequestBody
+
+}
+
+
+
+
+
+export function saveToken(token) {
+    window.localStorage.setItem('token', token);
 }

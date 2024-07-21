@@ -16,6 +16,7 @@ function sendRequest(method, path, query, body) {
     })
         .then(response => {
             if (response.status === 401) {
+                alert('로그인이 필요합니다.');
                 window.location.href = '/login';
             } else {
                 return response;
