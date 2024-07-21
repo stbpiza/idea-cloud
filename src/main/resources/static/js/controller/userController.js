@@ -33,6 +33,7 @@ export const debounce = (callback, delay) => {
 };
 
 // 회원가입
+// ==============================
 
 const signUpInputValid = {
      validEmail : false,
@@ -50,7 +51,7 @@ export function updateValidName() {
     buttonUpdate();
 }
 
-export function updateValidPassword(valid) {
+export function updateValidPassword() {
     signUpInputValid.validPassword = checkPasswordInput();
     if (checkPasswordSame()) {
         messageClear();
@@ -130,6 +131,7 @@ export function signUp() {
 
 
 // 로그인
+// ==============================
 
 export function signIn() {
 
