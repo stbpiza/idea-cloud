@@ -61,9 +61,9 @@ public class CreateKeywordService {
 
     public void updateKeywordCount(Map<Keyword, Integer> keywords, Long meetingNoteId) {
         keywords.forEach((keyword, count) -> {
-                    keyword.updateCount(
-                            keywordHistoryRepository.sumCountByKeywordIdWithoutByMeetingNoteId(keyword.id(), meetingNoteId)
-                            + count);
+            Integer sum = keywordHistoryRepository.sumCountByKeywordIdWithoutByMeetingNoteId(keyword.id(),
+                    meetingNoteId);
+            keyword.updateCount( ( sum == null ? 0 : sum ) + count);
         });
     }
 
