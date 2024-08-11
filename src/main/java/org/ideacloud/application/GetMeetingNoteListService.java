@@ -41,7 +41,10 @@ public class GetMeetingNoteListService {
                 meetingNote.body(),
                 meetingNote.created(),
                 meetingNote.user().id(),
-                meetingNote.user().name()
+                meetingNote.user().name(),
+                meetingNote.getKeywordHistories().stream()
+                        .map(kh -> kh.keyword().keyword())
+                        .toList()
         );
     }
 }
