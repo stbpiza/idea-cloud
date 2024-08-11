@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,14 +74,17 @@ public class CreateMeetingNoteService {
     }
 
     protected Map<Keyword, Integer> getKeywordCountMap(List<Keyword> allKeywords, List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {
-        return keywords.stream()
-                .collect(Collectors.toMap(
-                        keywordDto -> allKeywords.stream()
-                                .filter(keyword -> keyword.keyword().equals(keywordDto.keyword()))
-                                .findFirst()
-                                .orElseThrow(),
-                        MeetingNoteCreateDto.AddKeywordToMeetingNoteDto::count
-                ));
+        Map<Keyword, Integer> keywordCountMap = new LinkedHashMap<>();
+        for (MeetingNoteCreateDto.AddKeywordToMeetingNoteDto keyword : keywords) {
+            keywordCountMap.put(
+                    allKeywords.stream()
+                            .filter(k -> k.keyword().equals(keyword.keyword()))
+                            .findFirst()
+                            .orElseThrow(),
+                    keyword.count()
+            );
+        }
+        return keywordCountMap;
     }
 
     protected void addKeywordHistories(Map<Keyword, Integer> keywordMap, MeetingNote meetingNote) {
