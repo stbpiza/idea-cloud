@@ -15,6 +15,11 @@ export function drawMeetingNoteList(body) {
 
         const meetingNote = body.meetingNotes[i];
 
+        let keywordList = '';
+        for (let j = 0; j < meetingNote.keywords.length; j++) {
+            keywordList += '<a class="py-1 px-2 text-xs border rounded" href="#">' + meetingNote.keywords[j] + '</a>\n';
+        }
+
         const td1 = '<td class="flex items-center py-3 px-6 font-medium">\n' +
             '                        <input class="mr-4" type="checkbox" name="checkbox" id="2">\n' +
             '                        <div class="text-sm font-medium">\n' +
@@ -33,10 +38,7 @@ export function drawMeetingNoteList(body) {
             '                    <td class="text-xs text-gray-500">' + meetingNote.created + '</td>\n' +
             '                    <td class="py-4 flex items-center">\n' +
             '                        <div>\n' +
-            '                            <a class="py-1 px-2 text-xs border rounded" href="#">Marketing</a>\n' +
-            '                            <a class="py-1 px-2 text-xs border rounded" href="#">Advertising</a>\n' +
-            '                            <a class="py-1 px-2 text-xs border rounded" href="#">Sales</a>\n' +
-            '                            <a class="py-1 px-2 text-xs border rounded" href="#">+2</a>\n' +
+            '                            ' + keywordList + '\n' +
             '                        </div>\n' +
             '                        <a class="ml-6" href="#">\n' +
             '                            <svg width="16" height="4" viewbox="0 0 16 4" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
