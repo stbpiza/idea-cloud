@@ -1,5 +1,6 @@
 package org.ideacloud.security;
 
+import org.ideacloud.filter.RequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -48,7 +49,8 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/admin/session").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/users/**").permitAll())
             .authorizeHttpRequests(auth -> auth.anyRequest().hasAnyRole("USER", "ADMIN"))
-            .addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class);
+            .addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class)
+            .addFilterAfter(new RequestFilter(), BasicAuthenticationFilter.class);
 
         return http.build();
     }
