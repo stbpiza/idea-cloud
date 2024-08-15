@@ -18,4 +18,18 @@ public class GlobalExceptionHandler {
         log.error("Email already taken: {}", e.getMessage());
         return "Email already taken";
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleBadRequest(BadRequestException e) {
+        log.error("Bad request: {}", e.getMessage());
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String handleUnauthorized(UnauthorizedException e) {
+        log.error("Unauthorized: {}", e.getMessage());
+        return e.getMessage();
+    }
 }
