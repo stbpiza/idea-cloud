@@ -12,6 +12,7 @@ public enum ErrorCode {
     ETC_TOKEN(HttpStatus.UNAUTHORIZED, "기타 토큰 에러"),
     DB_SAME_ERROR(HttpStatus.CONFLICT, "db 중복 에러"),
     EMAIL_TIME_OUT(HttpStatus.BAD_REQUEST, "email 인증 유효시간 만료"),
+    EMAIL_ALREADY_USED(HttpStatus.CONFLICT, "이미 사용중이니 이메일"),
     DB_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알수없는 db 에러"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 값 요청"),
     CONFLICT(HttpStatus.CONFLICT, "409"),
