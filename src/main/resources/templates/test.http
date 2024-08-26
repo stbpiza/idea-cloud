@@ -12,7 +12,7 @@ POST http://localhost:8888/api/users/check-email
 Content-Type: application/json
 
 {
-  "email": "ab0147@naver.com"
+  "email": "test@test.com"
 }
 
 ###
@@ -28,7 +28,7 @@ Content-Type: application/json
 ###
 POST localhost:8888/api/meeting-notes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxODExNDQ2N30.XN6hSt8DQ9hn8EETfwBFY1oMUrJkpdZERFvjH1D10Mk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTc1NjIxODE2Mn0.JcHAjR5b-R6z05uw5O2-G6kheCpuIzA_Dau_ViqkwHs
 
 {
     "title": "Meeting 1",
@@ -48,9 +48,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4c
 ###
 GET localhost:8888/api/meeting-notes?page=0&size=10
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcyMTYyNzIzN30.CtyDKVkLY2pPcwaS6Eb8B5gALahC-Y-6BjskJmBgfkg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTc1NjIxODE2Mn0.JcHAjR5b-R6z05uw5O2-G6kheCpuIzA_Dau_ViqkwHs
 
 ###
 GET localhost:8888/api/meeting-notes/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTcxODgwMzYxNH0.sx__IBTZcV7r2CobcluJ-Lx-CVEY8_9vwbP-Jr_m5Uk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImV4cCI6MTc1NjIxODE2Mn0.JcHAjR5b-R6z05uw5O2-G6kheCpuIzA_Dau_ViqkwHs
