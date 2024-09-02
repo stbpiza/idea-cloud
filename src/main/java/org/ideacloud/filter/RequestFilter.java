@@ -37,8 +37,9 @@ public class RequestFilter extends GenericFilterBean {
         } catch (JsonProcessingException ignored){
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.info(authentication.getPrincipal().toString());
-        AuthUser authUser = !authentication.getPrincipal().equals("anonymousUser") ?
+//        log.info(authentication.getPrincipal().toString());
+        AuthUser authUser = authentication != null &&
+                !authentication.getPrincipal().equals("anonymousUser") ?
                 (AuthUser) authentication.getPrincipal() :
                 null;
         log.info("{" +
