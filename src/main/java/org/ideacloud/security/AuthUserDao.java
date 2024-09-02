@@ -44,7 +44,7 @@ public class AuthUserDao {
 
     public Optional<AuthUser> findByAccessToken(String accessToken) {
         String query = """
-                SELECT users.id, users.email, users.name, users.role, 
+                SELECT users.id, users.email, users.name, users.role
                 FROM users
                 JOIN access_tokens ON access_tokens.user_id=users.id
                 WHERE access_tokens.token=?
