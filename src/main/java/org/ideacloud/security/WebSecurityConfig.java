@@ -33,14 +33,16 @@ public class WebSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(
-                        "/favicon.ico"
-                        ,"/error"
-                        ,"/"
-                        ,"/index"
-                        ,"/mypage"
-                        ,"/signin"
-                        ,"/signup"
-                        ,"/static/**"
+                        "/favicon.ico",
+                        "/error",
+                        "/",
+                        "/index",
+                        "/mypage",
+                        "/signin",
+                        "/signup",
+                        "/static/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
                 );
     }
 
