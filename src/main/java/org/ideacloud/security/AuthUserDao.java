@@ -59,8 +59,8 @@ public class AuthUserDao {
                     resultSet.getLong("id"),
                     resultSet.getString("email"),
                     resultSet.getString("name"),
-                    resultSet.getString("role"),
-                    accessToken
+                    null,
+                    resultSet.getString("role")
             );
 
             return Optional.of(authUser);
