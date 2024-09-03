@@ -1,5 +1,6 @@
 package org.ideacloud.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ideacloud.application.CheckEmailService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "User", description = "유저 관련 API (회원가입, 이메일 중복 체크)")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/users")
