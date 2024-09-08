@@ -14,8 +14,31 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EmailAlreadyTaken.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public String handleEmailAlreadyTaken(EmailAlreadyTaken e) {
+    public ErrorDto handleEmailAlreadyTaken(EmailAlreadyTaken e) {
         log.error("Email already taken: {}", e.getMessage());
-        return "Email already taken";
+        return new ErrorDto(
+                ErrorCode.EMAIL_ALREADY_USED,
+                ErrorCode.EMAIL_ALREADY_USED.getMessage()
+        );
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handleBadRequest(BadRequestException e) {
+        log.error("Bad request: {}", e.getMessage());
+        return new ErrorDto(
+                ErrorCode.BAD_REQUEST,
+                e.getMessage()
+        );
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorDto handleUnauthorized(UnauthorizedException e) {
+        log.error("Unauthorized: {}", e.getMessage());
+        return new ErrorDto(
+                ErrorCode.UNAUTHORIZED,
+                e.getMessage()
+        );
     }
 }

@@ -1,5 +1,6 @@
 package org.ideacloud.controllers;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.ideacloud.application.LoginService;
 import org.ideacloud.dtos.LoginRequestDto;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Session", description = "세션 관련 API (로그인, 로그아웃)")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/session")

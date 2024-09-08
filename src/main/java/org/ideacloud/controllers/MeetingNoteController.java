@@ -1,5 +1,7 @@
 package org.ideacloud.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.ideacloud.application.CreateMeetingNoteService;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "MeetingNote", description = "회의록 관련 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/meeting-notes")
@@ -29,6 +32,7 @@ public class MeetingNoteController {
     private final GetMeetingNoteListService getMeetingNoteListService;
     private final GetMeetingNoteDetailService getMeetingNoteDetailService;
 
+    @Operation(summary = "회의록 등록", description = "회의록을 등록합니다.")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String createMeetingNote(Authentication authentication,
@@ -38,6 +42,7 @@ public class MeetingNoteController {
                 authUser.id(), dto.keywords());
     }
 
+    @Operation(summary = "회의록 목록 조회", description = "회의록 목록을 조회합니다.")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public MeetingNoteListDto listMeetingNotes(@RequestParam Integer page,
@@ -45,6 +50,7 @@ public class MeetingNoteController {
         return getMeetingNoteListService.getMeetingNoteList(page, size);
     }
 
+    @Operation(summary = "회의록 상세 조회", description = "회의록 상세를 조회합니다.")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MeetingNoteDetailDto detail(@PathVariable Long id) {
