@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Session", description = "세션 관련 API (로그인, 로그아웃)")
+@Tag(name = "02.Session", description = "세션 관련 API (로그인, 로그아웃)")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/session")
