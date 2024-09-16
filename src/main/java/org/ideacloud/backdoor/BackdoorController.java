@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/backdoor")
 public class BackdoorController {
 
+    private final BackdoorService backdoorService;
+
 
     @GetMapping("/setup-database")
     @Transactional
     public String setupDatabase() {
+        backdoorService.setupDatabase();
         return "Database setup complete";
     }
 }
