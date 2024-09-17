@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
@@ -36,7 +37,7 @@ public class Keyword extends TimeEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
     private List<KeywordHistory> keywordHistories;
 
-
+    @Builder
     public Keyword(String keyword) {
         this.keyword = keyword;
         this.priority = 0;

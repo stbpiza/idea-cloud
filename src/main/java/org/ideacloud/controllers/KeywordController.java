@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Keyword", description = "키워드 관련 API")
+@Tag(name = "04.Keyword", description = "키워드 관련 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/keywords")
