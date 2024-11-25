@@ -1,4 +1,3 @@
-version: "3"
 services:
   mysql-idea:
     container_name: mysql-idea
@@ -32,7 +31,10 @@ services:
       - idea-network
   spring-idea:
     container_name: spring-idea
-    image: azul/zulu-openjdk:17-latest
+    image: openjdk:17-alpine
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: ./
     ports:
       - "8888:8888"
     depends_on:
@@ -43,6 +45,9 @@ services:
     entrypoint: ["sh", "-c"]
     command:
       - |
+        apk update
+        apk add dos2unix
+        dos2unix ./gradlew
         ./gradlew clean
         ./gradlew bootrun -x test
     restart: on-failure
