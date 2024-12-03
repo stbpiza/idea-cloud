@@ -31,10 +31,7 @@ services:
       - idea-network
   spring-idea:
     container_name: spring-idea
-    image: openjdk:17-alpine
-    # build:
-    #   dockerfile: Dockerfile
-    #   context: ./
+    image: eclipse-temurin:23-alpine
     ports:
       - "8888:8888"
     depends_on:
