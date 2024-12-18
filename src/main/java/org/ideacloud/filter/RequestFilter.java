@@ -48,6 +48,7 @@ public class RequestFilter extends GenericFilterBean {
                         "\"statusCode\" : {}, " +
                         "\"latency\" : {}, " +
                         "\"id\" : {}, " +
+                        "\"ip\" : {}, " +
                         "\"userAgent\" : \"{}\", " +
                         "\"param\" : {}, " +
                         "\"body\" : {}" +
@@ -57,6 +58,7 @@ public class RequestFilter extends GenericFilterBean {
                 responseWrapper.getStatus(),
                 elapseTime,
                 authUser != null ? authUser.id() : null,
+                getIpAddress((HttpServletRequest)request),
                 ((HttpServletRequest) request).getHeader("user-agent"),
                 params,
                 getRequestBody(requestWrapper));
@@ -71,5 +73,43 @@ public class RequestFilter extends GenericFilterBean {
             }
         }
         return payload != null ? payload.replace("\n", "") : "\"\"";
+    }
+
+
+    private String getIpAddress(HttpServletRequest request) {
+
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Real-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-RealIP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("REMOTE_ADDR");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        if (ip.contains(",")) {
+            log.info("Multiple IP detected. IP: {}", ip);
+            String[] split = ip.split(",");
+            ip = split[0];
+        }
+        return ip;
+
     }
 }
