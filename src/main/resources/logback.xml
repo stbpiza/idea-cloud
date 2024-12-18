@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="logPath" value="./log"/>
+    <property name="fileName" value="idea-cloud"/>
+    <property name="maxHistory" value="365"/>
+    <property name="maxFileSize" value="50MB"/>
+    <property name="totalSizeCap" value="1GB"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="LOGGING-TO-FILE"/>
+    </root>
+
+    <!--  SQL 로그 및 파라메터 바인딩 값 -->
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.orm.jdbc.bind" level="TRACE"/>
+
+    <logger name="org.ideacloud" level="DEBUG"/>
+
+    <appender name="LOGGING-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}//${fileName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}//LOG_%d{yyyy-MM-dd}_${fileName}.log.%i.zip</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+            <maxFileSize>${maxFileSize}</maxFileSize>
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+</configuration>
