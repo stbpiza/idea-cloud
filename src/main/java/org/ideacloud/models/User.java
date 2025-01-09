@@ -7,12 +7,15 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
+
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -37,6 +40,8 @@ public class User extends TimeEntity {
     @Column(name = "role", columnDefinition = "varchar(20)", nullable = false)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<TeamMember> teamMembers;
 
     @Builder
     public User (String email, String name, String password, Role role) {

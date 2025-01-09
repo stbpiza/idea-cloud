@@ -5,10 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
+
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -29,4 +32,6 @@ public class Team extends TimeEntity {
     @Column(name = "current_member_count", nullable = false)
     private int currentMemberCount;
 
+    @OneToMany(mappedBy = "team")
+    private List<TeamMember> teamMembers;
 }
