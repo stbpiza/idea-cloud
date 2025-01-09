@@ -35,6 +35,9 @@ public class MeetingNote extends TimeEntity {
 
     private String body;
 
+    @Column(name = "team_id", nullable = false)
+    private Long teamId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

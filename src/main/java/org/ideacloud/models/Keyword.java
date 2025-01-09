@@ -34,6 +34,9 @@ public class Keyword extends TimeEntity {
 
     private Integer count;
 
+    @Column(name = "team_id", nullable = false)
+    private Long teamId;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
     private List<KeywordHistory> keywordHistories;
 
