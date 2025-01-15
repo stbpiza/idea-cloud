@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.ideacloud.filter.RequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -51,6 +52,7 @@ public class WebSecurityConfig {
         http.httpBasic(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+            .authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()) // OPTIONS 요청 허용
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/session").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/admin/session").permitAll())
             .authorizeHttpRequests(auth -> auth.requestMatchers("/api/users/**").permitAll())
