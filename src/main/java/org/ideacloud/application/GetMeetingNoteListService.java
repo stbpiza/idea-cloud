@@ -20,8 +20,7 @@ public class GetMeetingNoteListService {
 
     private final MeetingNoteRepository meetingNoteRepository;
 
-    public MeetingNoteListDto getMeetingNoteList(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public MeetingNoteListDto getMeetingNoteList(Pageable pageable) {
         Page<MeetingNote> meetingNotes = meetingNoteRepository.findAllByOrderByIdDesc(pageable);
 
         return new MeetingNoteListDto(
