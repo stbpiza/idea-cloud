@@ -56,6 +56,16 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(PaginationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorDto handlePaginationException(PaginationException e) {
+        log.error("Pagination error: {}", e.getMessage());
+        return new ErrorDto(
+                ErrorCode.PAGINATION_ERROR,
+                e.getMessage()
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDto handleException(Exception e) {
