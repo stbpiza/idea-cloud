@@ -11,6 +11,7 @@ import org.ideacloud.dtos.MeetingNoteCreateDto;
 import org.ideacloud.dtos.MeetingNoteDetailDto;
 import org.ideacloud.dtos.MeetingNoteListDto;
 import org.ideacloud.security.AuthUser;
+import org.ideacloud.utils.PaginationUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,7 @@ public class MeetingNoteController {
     @ResponseStatus(HttpStatus.OK)
     public MeetingNoteListDto listMeetingNotes(@RequestParam Integer page,
                                               @RequestParam Integer size) {
-        return getMeetingNoteListService.getMeetingNoteList(page, size);
+        return getMeetingNoteListService.getMeetingNoteList(PaginationUtil.makePageable(page, size));
     }
 
     @Operation(summary = "회의록 상세 조회", description = "회의록 상세를 조회합니다.")

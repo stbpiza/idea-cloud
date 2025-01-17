@@ -19,6 +19,7 @@ public enum ErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND, "404"),
     FORBIDDEN(HttpStatus.FORBIDDEN, "권한 없음"),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "401"),
+    PAGINATION_ERROR(HttpStatus.BAD_REQUEST, "페이지와 사이즈는 1이상이어야 합니다."),
     ;
 
 
