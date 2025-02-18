@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class CreateKeywordService {
+public class KeywordService {
 
     private final KeywordRepository keywordRepository;
     private final KeywordHistoryRepository keywordHistoryRepository;

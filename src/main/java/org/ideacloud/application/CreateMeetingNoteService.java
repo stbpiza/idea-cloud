@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -26,7 +25,7 @@ public class CreateMeetingNoteService {
     private final MeetingNoteRepository meetingNoteRepository;
     private final KeywordRepository keywordRepository;
     private final KeywordHistoryRepository keywordHistoryRepository;
-    private final CreateKeywordService createKeywordService;
+    private final KeywordService keywordService;
 
     public String createMeetingNote(String title, String body, Long userId,
                                   List<MeetingNoteCreateDto.AddKeywordToMeetingNoteDto> keywords) {
@@ -40,7 +39,7 @@ public class CreateMeetingNoteService {
 
         Map<Keyword, Integer> keywordMap = addKeywords(keywords);
 
-        createKeywordService.updateKeywordCount(keywordMap, meetingNote.id());
+        keywordService.updateKeywordCount(keywordMap, meetingNote.id());
 
         addKeywordHistories(keywordMap, meetingNote);
 
