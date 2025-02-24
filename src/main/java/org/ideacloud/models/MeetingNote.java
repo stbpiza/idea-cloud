@@ -50,6 +50,10 @@ public class MeetingNote extends TimeEntity {
         this.user = user;
     }
 
+    public MeetingNote(Long id) {
+        this.id = id;
+    }
+
     public Long id() {
         return id;
     }
