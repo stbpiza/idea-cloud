@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.ideacloud.application.CreateMeetingNoteService;
 import org.ideacloud.application.GetMeetingNoteDetailService;
 import org.ideacloud.application.GetMeetingNoteListService;
+import org.ideacloud.application.UpdateMeetingNoteService;
 import org.ideacloud.dtos.MeetingNoteCreateDto;
 import org.ideacloud.dtos.MeetingNoteDetailDto;
 import org.ideacloud.dtos.MeetingNoteListDto;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +34,7 @@ public class MeetingNoteController {
     private final CreateMeetingNoteService createMeetingNoteService;
     private final GetMeetingNoteListService getMeetingNoteListService;
     private final GetMeetingNoteDetailService getMeetingNoteDetailService;
+    private final UpdateMeetingNoteService updateMeetingNoteService;
 
     @Operation(summary = "회의록 등록", description = "회의록을 등록합니다.")
     @PostMapping
@@ -56,5 +59,13 @@ public class MeetingNoteController {
     @ResponseStatus(HttpStatus.OK)
     public MeetingNoteDetailDto detail(@PathVariable Long id) {
         return getMeetingNoteDetailService.getMeetingNoteDetail(id);
+    }
+
+    @Operation(summary =  "회의록 수정", description = "회의록을 수정합니다.")
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateMeetingNote(@PathVariable Long id,
+                                    @Valid @RequestBody MeetingNoteCreateDto dto) {
+        return updateMeetingNoteService.updateMeetingNote(id, dto);
     }
 }

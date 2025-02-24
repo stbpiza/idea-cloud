@@ -11,14 +11,10 @@ import org.ideacloud.repositories.MeetingNoteRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -31,7 +27,7 @@ class CreateMeetingNoteServiceTest {
     private MeetingNoteRepository meetingNoteRepository;
     private KeywordRepository keywordRepository;
     private KeywordHistoryRepository keywordHistoryRepository;
-    private CreateKeywordService createKeywordService;
+    private KeywordService keywordService;
     private CreateMeetingNoteService createMeetingNoteService;
 
     private String title;
@@ -47,13 +43,13 @@ class CreateMeetingNoteServiceTest {
         meetingNoteRepository = mock(MeetingNoteRepository.class);
         keywordRepository = mock(KeywordRepository.class);
         keywordHistoryRepository = mock(KeywordHistoryRepository.class);
-        createKeywordService = mock(CreateKeywordService.class);
+        keywordService = mock(KeywordService.class);
 
         createMeetingNoteService = new CreateMeetingNoteService(
                                             meetingNoteRepository,
                                             keywordRepository,
                                             keywordHistoryRepository,
-                                            createKeywordService
+                keywordService
                                     );
     }
 

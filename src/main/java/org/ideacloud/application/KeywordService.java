@@ -1,8 +1,11 @@
 package org.ideacloud.application;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.ideacloud.dtos.MeetingNoteCreateDto.AddKeywordToMeetingNoteDto;
 import org.ideacloud.models.Keyword;
+import org.ideacloud.models.KeywordHistory;
+import org.ideacloud.models.MeetingNote;
 import org.ideacloud.repositories.KeywordHistoryRepository;
 import org.ideacloud.repositories.KeywordRepository;
 import org.springframework.stereotype.Service;
@@ -16,12 +19,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class CreateKeywordService {
+public class KeywordService {
 
     private final KeywordRepository keywordRepository;
     private final KeywordHistoryRepository keywordHistoryRepository;
+    private final EntityManager em;
 
-    public Map<Keyword, Integer> addKeywords(List<AddKeywordToMeetingNoteDto> keywords) {
+    public void addKeywords(Long meetingNoteId, List<AddKeywordToMeetingNoteDto> keywords) {
 
         List<String> keywordStrings = keywords.stream()
                 .map(AddKeywordToMeetingNoteDto::keyword)
@@ -37,7 +41,24 @@ public class CreateKeywordService {
         allKeywords.addAll(existingKeywords);
         allKeywords.addAll(newKeywords);
 
-        return getKeywordCountMap(allKeywords, keywords);
+        Map<Keyword, Integer> keywordCountMap = getKeywordCountMap(allKeywords, keywords);
+
+        updateKeywordCount(keywordCountMap, meetingNoteId);
+
+        addKeywordHistories(keywordCountMap, meetingNoteId);
+    }
+
+    public void updateKeywords(Long meetingNoteId, List<AddKeywordToMeetingNoteDto> keywords) {
+
+        List<KeywordHistory> keywordHistories = keywordHistoryRepository.findAllByMeetingNoteId(meetingNoteId);
+
+        for (KeywordHistory keywordHistory : keywordHistories) {
+            keywordHistory.keyword().updateCount(keywordHistory.keyword().count() - keywordHistory.count());
+            keywordHistoryRepository.delete(keywordHistory);
+        }
+        em.flush();
+
+        addKeywords(meetingNoteId, keywords);
     }
 
     protected List<Keyword> getNewKeywords(List<String> keywordStrings, List<Keyword> existingKeywords) {
@@ -59,12 +80,26 @@ public class CreateKeywordService {
                 ));
     }
 
-    public void updateKeywordCount(Map<Keyword, Integer> keywords, Long meetingNoteId) {
+    protected void updateKeywordCount(Map<Keyword, Integer> keywords, Long meetingNoteId) {
         keywords.forEach((keyword, count) -> {
             Integer sum = keywordHistoryRepository.sumCountByKeywordIdWithoutByMeetingNoteId(keyword.id(),
                     meetingNoteId);
             keyword.updateCount( ( sum == null ? 0 : sum ) + count);
         });
+    }
+
+    protected void addKeywordHistories(Map<Keyword, Integer> keywordMap, Long meetingNoteId) {
+        List<KeywordHistory> keywordHistories = new ArrayList<>();
+
+        for (Map.Entry<Keyword, Integer> entry : keywordMap.entrySet()) {
+            keywordHistories.add(KeywordHistory.builder()
+                    .keyword(entry.getKey())
+                    .meetingNote(new MeetingNote(meetingNoteId))
+                    .count(entry.getValue())
+                    .build());
+        }
+
+        keywordHistoryRepository.saveAll(keywordHistories);
     }
 
 }
