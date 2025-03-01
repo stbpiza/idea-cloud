@@ -47,10 +47,11 @@ public class MeetingNote extends TimeEntity {
 
 
     @Builder
-    public MeetingNote(String title, String body, User user) {
+    public MeetingNote(String title, String body, User user, Long teamId) {
         this.title = title;
         this.body = body;
         this.user = user;
+        this.teamId = teamId;
     }
 
     public MeetingNote(Long id) {

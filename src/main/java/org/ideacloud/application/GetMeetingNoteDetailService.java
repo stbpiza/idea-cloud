@@ -12,10 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GetMeetingNoteDetailService {
 
+    private final TeamService teamService;
     private final MeetingNoteRepository meetingNoteRepository;
 
-    public MeetingNoteDetailDto getMeetingNoteDetail(Long meetingNoteId) {
-        return meetingNoteRepository.findById(meetingNoteId)
+    public MeetingNoteDetailDto getMeetingNoteDetail(Long meetingNoteId, Long userId) {
+
+        Long teamId = teamService.getTeamId(userId);
+
+        return meetingNoteRepository.findByIdAndTeamId(meetingNoteId, teamId)
                 .map(meetingNote -> new MeetingNoteDetailDto(
                         meetingNote.id(),
                         meetingNote.title(),

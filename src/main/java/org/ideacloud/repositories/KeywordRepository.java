@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
-    List<Keyword> findAllByKeywordIn(List<String> keywords);
+    List<Keyword> findAllByTeamIdAndKeywordIn(Long teamId, List<String> keywords);
 
     Page<Keyword> findAllByTeamIdOrderByIdDesc(Long teamId, Pageable pageable);
 }

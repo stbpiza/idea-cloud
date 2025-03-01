@@ -76,6 +76,16 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(MeetingNoteNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDto handleMeetingNoteNotFoundException(MeetingNoteNotFoundException e) {
+        log.error("Meeting note not found: {}", e.getMessage());
+        return new ErrorDto(
+                ErrorCode.MEETING_NOTE_NOT_FOUND,
+                e.getMessage()
+        );
+    }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

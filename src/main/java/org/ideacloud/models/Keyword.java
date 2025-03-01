@@ -41,8 +41,9 @@ public class Keyword extends TimeEntity {
     private List<KeywordHistory> keywordHistories;
 
     @Builder
-    public Keyword(String keyword) {
+    public Keyword(String keyword, Long teamId) {
         this.keyword = keyword;
+        this.teamId = teamId;
         this.priority = 0;
         this.count = 0;
     }
