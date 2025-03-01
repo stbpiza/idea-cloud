@@ -61,6 +61,14 @@ public class KeywordService {
         addKeywords(meetingNoteId, keywords, teamId);
     }
 
+    public List<Keyword> getOnGoingKeywords(Long teamId) {
+        return keywordRepository.findOnGoingKeyword(teamId);
+    }
+
+    public List<Keyword> getAllKeywords(Long teamId) {
+        return keywordRepository.findAllByTeamId(teamId);
+    }
+
     protected List<Keyword> getNewKeywords(List<String> keywordStrings, List<Keyword> existingKeywords, Long teamId) {
         return keywordStrings.stream()
                 .filter(keyword -> existingKeywords.stream().noneMatch(k -> k.keyword().equals(keyword)))

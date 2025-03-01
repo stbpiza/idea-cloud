@@ -40,6 +40,9 @@ public class Keyword extends TimeEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
     private List<KeywordHistory> keywordHistories;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
+    private List<KeywordOrder> keywordOrders;
+
     @Builder
     public Keyword(String keyword, Long teamId) {
         this.keyword = keyword;
@@ -70,6 +73,10 @@ public class Keyword extends TimeEntity {
 
     public List<KeywordHistory> keywordHistories() {
         return keywordHistories;
+    }
+
+    public List<KeywordOrder> keywordOrders() {
+        return keywordOrders;
     }
 
 

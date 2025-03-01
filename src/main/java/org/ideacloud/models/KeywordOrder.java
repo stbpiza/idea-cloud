@@ -40,6 +40,10 @@ public class KeywordOrder {
         this.deleted = false;
     }
 
+    public Integer order() {
+        return order;
+    }
+
     public void delete() {
         this.deleted = true;
     }
