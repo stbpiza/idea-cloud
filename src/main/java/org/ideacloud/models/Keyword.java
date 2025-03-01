@@ -34,12 +34,19 @@ public class Keyword extends TimeEntity {
 
     private Integer count;
 
+    @Column(name = "team_id", nullable = false)
+    private Long teamId;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
     private List<KeywordHistory> keywordHistories;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
+    private List<KeywordOrder> keywordOrders;
+
     @Builder
-    public Keyword(String keyword) {
+    public Keyword(String keyword, Long teamId) {
         this.keyword = keyword;
+        this.teamId = teamId;
         this.priority = 0;
         this.count = 0;
     }
@@ -66,6 +73,10 @@ public class Keyword extends TimeEntity {
 
     public List<KeywordHistory> keywordHistories() {
         return keywordHistories;
+    }
+
+    public List<KeywordOrder> keywordOrders() {
+        return keywordOrders;
     }
 
 

@@ -17,6 +17,8 @@ public enum ErrorCode {
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 값 요청"),
     CONFLICT(HttpStatus.CONFLICT, "409"),
     NOT_FOUND(HttpStatus.NOT_FOUND, "404"),
+    TEAM_NOT_FOUND(HttpStatus.NOT_FOUND, "팀을 찾을 수 없음"),
+    MEETING_NOTE_NOT_FOUND(HttpStatus.NOT_FOUND, "회의록을 찾을 수 없음"),
     FORBIDDEN(HttpStatus.FORBIDDEN, "권한 없음"),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "401"),
     PAGINATION_ERROR(HttpStatus.BAD_REQUEST, "페이지와 사이즈는 1이상이어야 합니다."),

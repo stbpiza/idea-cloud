@@ -17,6 +17,7 @@ import static org.ideacloud.models.Role.ROLE_USER;
 @Service
 public class SignupService {
 
+    private final TeamService teamService;
     private final AuthUserDao authUserDao;
     private final PasswordEncoder passwordEncoder;
     private final AccessTokenGenerator accessTokenGenerator;
@@ -28,6 +29,8 @@ public class SignupService {
         }
 
         User user = createUser(email, name, password);
+
+        teamService.createTeam(user);
 
         return createAccessToken(user.id());
     }

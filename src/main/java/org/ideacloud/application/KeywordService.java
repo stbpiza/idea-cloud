@@ -25,15 +25,15 @@ public class KeywordService {
     private final KeywordHistoryRepository keywordHistoryRepository;
     private final EntityManager em;
 
-    public void addKeywords(Long meetingNoteId, List<AddKeywordToMeetingNoteDto> keywords) {
+    public void addKeywords(Long meetingNoteId, List<AddKeywordToMeetingNoteDto> keywords, Long teamId) {
 
         List<String> keywordStrings = keywords.stream()
                 .map(AddKeywordToMeetingNoteDto::keyword)
                 .toList();
 
-        List<Keyword> existingKeywords = keywordRepository.findAllByKeywordIn(keywordStrings);
+        List<Keyword> existingKeywords = keywordRepository.findAllByTeamIdAndKeywordIn(teamId, keywordStrings);
 
-        List<Keyword> newKeywords = getNewKeywords(keywordStrings, existingKeywords);
+        List<Keyword> newKeywords = getNewKeywords(keywordStrings, existingKeywords, teamId);
 
         keywordRepository.saveAll(newKeywords);
 
@@ -48,7 +48,7 @@ public class KeywordService {
         addKeywordHistories(keywordCountMap, meetingNoteId);
     }
 
-    public void updateKeywords(Long meetingNoteId, List<AddKeywordToMeetingNoteDto> keywords) {
+    public void updateKeywords(Long meetingNoteId, List<AddKeywordToMeetingNoteDto> keywords, Long teamId) {
 
         List<KeywordHistory> keywordHistories = keywordHistoryRepository.findAllByMeetingNoteId(meetingNoteId);
 
@@ -58,13 +58,24 @@ public class KeywordService {
         }
         em.flush();
 
-        addKeywords(meetingNoteId, keywords);
+        addKeywords(meetingNoteId, keywords, teamId);
     }
 
-    protected List<Keyword> getNewKeywords(List<String> keywordStrings, List<Keyword> existingKeywords) {
+    public List<Keyword> getOnGoingKeywords(Long teamId) {
+        return keywordRepository.findOnGoingKeyword(teamId);
+    }
+
+    public List<Keyword> getAllKeywords(Long teamId) {
+        return keywordRepository.findAllByTeamId(teamId);
+    }
+
+    protected List<Keyword> getNewKeywords(List<String> keywordStrings, List<Keyword> existingKeywords, Long teamId) {
         return keywordStrings.stream()
                 .filter(keyword -> existingKeywords.stream().noneMatch(k -> k.keyword().equals(keyword)))
-                .map(Keyword::new)
+                .map(keyword -> Keyword.builder()
+                        .keyword(keyword)
+                        .teamId(teamId)
+                        .build())
                 .toList();
     }
 

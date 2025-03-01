@@ -5,7 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.ideacloud.application.GetKeywordListService;
 import org.ideacloud.dtos.KeywordListDto;
+import org.ideacloud.security.AuthUser;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +25,12 @@ public class KeywordController {
     @Operation(summary = "keyword list 조회", description = "keyword list를 조회합니다. ")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public KeywordListDto listKeywords(@RequestParam Integer page,
+    public KeywordListDto listKeywords(Authentication authentication,
+                                       @RequestParam Integer page,
                                        @RequestParam Integer size) {
-        return getKeywordListService.getKeywordList(page, size);
+
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+
+        return getKeywordListService.getKeywordList(page, size, authUser.id());
     }
 }

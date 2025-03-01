@@ -49,23 +49,29 @@ public class MeetingNoteController {
     @Operation(summary = "회의록 목록 조회", description = "회의록 목록을 조회합니다.")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public MeetingNoteListDto listMeetingNotes(@RequestParam Integer page,
+    public MeetingNoteListDto listMeetingNotes(Authentication authentication,
+                                               @RequestParam Integer page,
                                               @RequestParam Integer size) {
-        return getMeetingNoteListService.getMeetingNoteList(PaginationUtil.makePageable(page, size));
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        return getMeetingNoteListService.getMeetingNoteList(PaginationUtil.makePageable(page, size), authUser.id());
     }
 
     @Operation(summary = "회의록 상세 조회", description = "회의록 상세를 조회합니다.")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public MeetingNoteDetailDto detail(@PathVariable Long id) {
-        return getMeetingNoteDetailService.getMeetingNoteDetail(id);
+    public MeetingNoteDetailDto detail(Authentication authentication,
+                                       @PathVariable Long id) {
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        return getMeetingNoteDetailService.getMeetingNoteDetail(id, authUser.id());
     }
 
     @Operation(summary =  "회의록 수정", description = "회의록을 수정합니다.")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String updateMeetingNote(@PathVariable Long id,
+    public String updateMeetingNote(Authentication authentication,
+                                    @PathVariable Long id,
                                     @Valid @RequestBody MeetingNoteCreateDto dto) {
-        return updateMeetingNoteService.updateMeetingNote(id, dto);
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        return updateMeetingNoteService.updateMeetingNote(id, dto, authUser.id());
     }
 }
