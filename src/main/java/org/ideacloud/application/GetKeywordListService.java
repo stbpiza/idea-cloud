@@ -16,11 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class GetKeywordListService {
 
+    private final TeamService teamService;
     private final KeywordRepository keywordRepository;
 
-    public KeywordListDto getKeywordList(int page, int size) {
+    public KeywordListDto getKeywordList(int page, int size, Long userId) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Keyword> keywords = keywordRepository.findAllByOrderByIdDesc(pageable);
+
+        Long teamId = teamService.getTeamId(userId);
+
+        Page<Keyword> keywords = keywordRepository.findAllByTeamIdOrderByIdDesc(teamId, pageable);
 
         return new KeywordListDto(
                 keywords.getContent().stream()

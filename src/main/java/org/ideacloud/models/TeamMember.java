@@ -38,6 +38,12 @@ public class TeamMember extends TimeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+
+    public Team team() {
+        return team;
+    }
+
+
     @Builder
     public TeamMember(TeamRole teamRole, Team team, User user) {
         this.teamRole = teamRole;

@@ -1,6 +1,7 @@
 package org.ideacloud.application;
 
 import lombok.RequiredArgsConstructor;
+import org.ideacloud.exceptions.TeamNotFoundException;
 import org.ideacloud.models.Team;
 import org.ideacloud.models.TeamMember;
 import org.ideacloud.models.TeamRole;
@@ -9,6 +10,8 @@ import org.ideacloud.repositories.TeamMemberRepository;
 import org.ideacloud.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -35,4 +38,13 @@ public class TeamService {
         teamMemberRepository.save(teamMember);
     }
 
+    public Long getTeamId(Long userId) {
+        List<TeamMember> myTeams = teamMemberRepository.findByUserId(userId);
+
+        if (myTeams.isEmpty()) {
+            throw new TeamNotFoundException("Team not found");
+        }
+
+        return myTeams.get(0).team().id();
+    }
 }

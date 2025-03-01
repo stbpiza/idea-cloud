@@ -36,6 +36,9 @@ public class Team extends TimeEntity {
     @OneToMany(mappedBy = "team")
     private List<TeamMember> teamMembers;
 
+    public Long id() {
+        return id;
+    }
 
     @Builder
     public Team(String name) {

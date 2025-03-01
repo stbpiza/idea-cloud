@@ -66,6 +66,17 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(TeamNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorDto handleTeamNotFoundException(TeamNotFoundException e) {
+        log.error("Team not found: {}", e.getMessage());
+        return new ErrorDto(
+                ErrorCode.TEAM_NOT_FOUND,
+                e.getMessage()
+        );
+    }
+
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorDto handleException(Exception e) {
@@ -76,6 +87,7 @@ public class GlobalExceptionHandler {
                 e.getMessage()
         );
     }
+
 
     // TODO: 나중에 필요하면 주석 해제
 //    @ExceptionHandler(ConstraintViolationException.class)
