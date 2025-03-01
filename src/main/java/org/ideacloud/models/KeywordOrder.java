@@ -23,6 +23,7 @@ public class KeywordOrder {
     @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
+    @Column(name = "keyword_order", nullable = false)
     private Integer order;
 
     private boolean deleted;
