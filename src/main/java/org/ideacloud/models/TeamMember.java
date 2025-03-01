@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
 
@@ -37,4 +38,10 @@ public class TeamMember extends TimeEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Builder
+    public TeamMember(TeamRole teamRole, Team team, User user) {
+        this.teamRole = teamRole;
+        this.team = team;
+        this.user = user;
+    }
 }

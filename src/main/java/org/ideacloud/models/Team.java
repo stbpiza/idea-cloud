@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.ideacloud.models.superclass.TimeEntity;
 
@@ -34,4 +35,13 @@ public class Team extends TimeEntity {
 
     @OneToMany(mappedBy = "team")
     private List<TeamMember> teamMembers;
+
+
+    @Builder
+    public Team(String name) {
+        this.name = name;
+        this.description = name;
+        this.currentMemberCount = currentMemberCount = 0;
+    }
+
 }
